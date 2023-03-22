@@ -44,42 +44,42 @@ namespace Application.DataModels
 
         public double Pom16 { get; set; }
 
-        public double Pom20 { get; set; }
-
-        public double Pom21 { get; set; }
-
-        public double Pom22 { get; set; }
-
         public double Pom17 { get; set; }
 
         public double Pom18 { get; set; }
 
         public double Pom19 { get; set; }
 
+        public double Pom20 { get; set; }
+
+        public double Pom21 { get; set; }
+
+        public double Pom22 { get; set; }
+
         public double Pom23 { get; set; }
 
-        public double? Pom24 { get; set; }
+        public double Pom24 { get; set; }
 
-        public double? Pom25 { get; set; }
+        public double Pom25 { get; set; }
 
-        public double? Pom26 { get; set; }
+        public double Pom26 { get; set; }
 
-        public double? Pom27 { get; set; }
+        public double Pom27 { get; set; }
 
-        public double? Pom28 { get; set; }
+        public double Pom28 { get; set; }
 
-        public double? Pom29 { get; set; }
+        public double Pom29 { get; set; }
 
-        public double? Pom30 { get; set; }
+        public double Pom30 { get; set; }
 
-        public double? Pom31 { get; set; }
+        public double Pom31 { get; set; }
 
-        public double? Pom32 { get; set; }
+        public double Pom32 { get; set; }
 
-        public double? Pom33 { get; set; }
+        public double Pom33 { get; set; }
 
-        public double? Pom34 { get; set; }
+        public double Pom34 { get; set; }
 
-        public double? Pom35 { get; set; }
+        public double Pom35 { get; set; }
     }
 }

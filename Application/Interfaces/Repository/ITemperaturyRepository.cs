@@ -13,5 +13,4 @@ namespace Application.Interfaces.Repository
         Task<List<Temperatury>> GetAllTemperaturyAsync();
         Task<List<Temperatury>> GetLastTenTemperaturiesAsync();
     }
-
 }

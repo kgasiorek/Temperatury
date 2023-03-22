@@ -1,4 +1,51 @@
 ﻿@page "/"
 
+<MudButton OnClick="async () => await LoadData()">Załaduj</MudButton>
+
+
+@if(_loaded)
+{
+    <MudText>Ostatnie odświeżenie @currentDateTime</MudText>
+    <MudText>Ostatnie pobranie danych z serwera @_data?.FirstOrDefault().Czas</MudText>
+
+    <MudText><b>Aktualna:</b> @_data[0].Pom1, <b>1 minuta:</b> @Math.Round((_data[0].Pom1 - _data[1].Pom1),2), <b>10 minut:</b> @Math.Round((_data[0].Pom1 - _data[9].Pom1),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom2, <b>1 minuta:</b> @Math.Round((_data[0].Pom2 - _data[1].Pom2),2), <b>10 minut:</b> @Math.Round((_data[0].Pom2 - _data[9].Pom2),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom3, <b>1 minuta:</b> @Math.Round((_data[0].Pom3 - _data[1].Pom3),2), <b>10 minut:</b> @Math.Round((_data[0].Pom3 - _data[9].Pom3),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom4, <b>1 minuta:</b> @Math.Round((_data[0].Pom4 - _data[1].Pom4),2), <b>10 minut:</b> @Math.Round((_data[0].Pom4 - _data[9].Pom4),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom5, <b>1 minuta:</b> @Math.Round((_data[0].Pom5 - _data[1].Pom5),2), <b>10 minut:</b> @Math.Round((_data[0].Pom5 - _data[9].Pom5),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom6, <b>1 minuta:</b> @Math.Round((_data[0].Pom6 - _data[1].Pom6),2), <b>10 minut:</b> @Math.Round((_data[0].Pom6 - _data[9].Pom6),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom7, <b>1 minuta:</b> @Math.Round((_data[0].Pom7 - _data[1].Pom7),2), <b>10 minut:</b> @Math.Round((_data[0].Pom7 - _data[9].Pom7),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom8, <b>1 minuta:</b> @Math.Round((_data[0].Pom8 - _data[1].Pom8),2), <b>10 minut:</b> @Math.Round((_data[0].Pom8 - _data[9].Pom8),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom9, <b>1 minuta:</b> @Math.Round((_data[0].Pom9 - _data[1].Pom9),2), <b>10 minut:</b> @Math.Round((_data[0].Pom9 - _data[9].Pom9),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom10, <b>1 minuta:</b> @Math.Round((_data[0].Pom10 - _data[1].Pom10),2), <b>10 minut:</b> @Math.Round((_data[0].Pom10 - _data[9].Pom10),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom11, <b>1 minuta:</b> @Math.Round((_data[0].Pom11 - _data[1].Pom11),2), <b>10 minut:</b> @Math.Round((_data[0].Pom11 - _data[9].Pom11),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom12, <b>1 minuta:</b> @Math.Round((_data[0].Pom12 - _data[1].Pom12),2), <b>10 minut:</b> @Math.Round((_data[0].Pom12 - _data[9].Pom12),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom13, <b>1 minuta:</b> @Math.Round((_data[0].Pom13 - _data[1].Pom13),2), <b>10 minut:</b> @Math.Round((_data[0].Pom13 - _data[9].Pom13),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom14, <b>1 minuta:</b> @Math.Round((_data[0].Pom14 - _data[1].Pom14),2), <b>10 minut:</b> @Math.Round((_data[0].Pom14 - _data[9].Pom14),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom15, <b>1 minuta:</b> @Math.Round((_data[0].Pom15 - _data[1].Pom15),2), <b>10 minut:</b> @Math.Round((_data[0].Pom15 - _data[9].Pom15),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom16, <b>1 minuta:</b> @Math.Round((_data[0].Pom16 - _data[1].Pom16),2), <b>10 minut:</b> @Math.Round((_data[0].Pom16 - _data[9].Pom16),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom17, <b>1 minuta:</b> @Math.Round((_data[0].Pom17 - _data[1].Pom17),2), <b>10 minut:</b> @Math.Round((_data[0].Pom17 - _data[9].Pom17),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom18, <b>1 minuta:</b> @Math.Round((_data[0].Pom18 - _data[1].Pom18),2), <b>10 minut:</b> @Math.Round((_data[0].Pom18 - _data[9].Pom18),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom19, <b>1 minuta:</b> @Math.Round((_data[0].Pom19 - _data[1].Pom19),2), <b>10 minut:</b> @Math.Round((_data[0].Pom19 - _data[9].Pom19),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom20, <b>1 minuta:</b> @Math.Round((_data[0].Pom20 - _data[1].Pom20),2), <b>10 minut:</b> @Math.Round((_data[0].Pom20 - _data[9].Pom20),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom21, <b>1 minuta:</b> @Math.Round((_data[0].Pom21 - _data[1].Pom21),2), <b>10 minut:</b> @Math.Round((_data[0].Pom21 - _data[9].Pom21),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom22, <b>1 minuta:</b> @Math.Round((_data[0].Pom22 - _data[1].Pom22),2), <b>10 minut:</b> @Math.Round((_data[0].Pom22 - _data[9].Pom22),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom23, <b>1 minuta:</b> @Math.Round((_data[0].Pom23 - _data[1].Pom23),2), <b>10 minut:</b> @Math.Round((_data[0].Pom23 - _data[9].Pom23),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom24, <b>1 minuta:</b> @Math.Round((_data[0].Pom24 - _data[1].Pom24),2), <b>10 minut:</b> @Math.Round((_data[0].Pom24 - _data[9].Pom24),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom25, <b>1 minuta:</b> @Math.Round((_data[0].Pom25 - _data[1].Pom25),2), <b>10 minut:</b> @Math.Round((_data[0].Pom25 - _data[9].Pom25),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom26, <b>1 minuta:</b> @Math.Round((_data[0].Pom26 - _data[1].Pom26),2), <b>10 minut:</b> @Math.Round((_data[0].Pom26 - _data[9].Pom26),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom27, <b>1 minuta:</b> @Math.Round((_data[0].Pom27 - _data[1].Pom27),2), <b>10 minut:</b> @Math.Round((_data[0].Pom27 - _data[9].Pom27),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom28, <b>1 minuta:</b> @Math.Round((_data[0].Pom28 - _data[1].Pom28),2), <b>10 minut:</b> @Math.Round((_data[0].Pom28 - _data[9].Pom28),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom29, <b>1 minuta:</b> @Math.Round((_data[0].Pom29 - _data[1].Pom29),2), <b>10 minut:</b> @Math.Round((_data[0].Pom29 - _data[9].Pom29),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom30, <b>1 minuta:</b> @Math.Round((_data[0].Pom30 - _data[1].Pom30),2), <b>10 minut:</b> @Math.Round((_data[0].Pom30 - _data[9].Pom30),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom31, <b>1 minuta:</b> @Math.Round((_data[0].Pom31 - _data[1].Pom31),2), <b>10 minut:</b> @Math.Round((_data[0].Pom31 - _data[9].Pom31),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom32, <b>1 minuta:</b> @Math.Round((_data[0].Pom32 - _data[1].Pom32),2), <b>10 minut:</b> @Math.Round((_data[0].Pom32 - _data[9].Pom32),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom33, <b>1 minuta:</b> @Math.Round((_data[0].Pom33 - _data[1].Pom33),2), <b>10 minut:</b> @Math.Round((_data[0].Pom33 - _data[9].Pom33),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom34, <b>1 minuta:</b> @Math.Round((_data[0].Pom34 - _data[1].Pom34),2), <b>10 minut:</b> @Math.Round((_data[0].Pom34 - _data[9].Pom34),2)</MudText>
+    <MudText><b>Aktualna:</b> @_data[0].Pom35, <b>1 minuta:</b> @Math.Round((_data[0].Pom35 - _data[1].Pom35),2), <b>10 minut:</b> @Math.Round((_data[0].Pom35 - _data[9].Pom35),2)</MudText>
+
+}
+
+
 
 

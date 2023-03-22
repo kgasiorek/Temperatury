@@ -41,17 +41,17 @@ public partial class Temperatury
 
     public double Pom16 { get; set; }
 
-    public double Pom20 { get; set; }
-
-    public double Pom21 { get; set; }
-
-    public double Pom22 { get; set; }
-
     public double Pom17 { get; set; }
 
     public double Pom18 { get; set; }
 
     public double Pom19 { get; set; }
+
+    public double Pom20 { get; set; }
+
+    public double Pom21 { get; set; }
+
+    public double Pom22 { get; set; }
 
     public double Pom23 { get; set; }
 

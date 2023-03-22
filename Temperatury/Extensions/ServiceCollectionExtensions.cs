@@ -11,6 +11,7 @@ namespace Temperatury.Extensions
     {
         internal static IServiceCollection AddRepositories(this IServiceCollection services)
         {
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
             services.AddScoped<ITemperaturyRepository, TemperaturyRepository>();
             return services;
         }

@@ -34,5 +34,7 @@ namespace Application.Services
             var mapped = _mapper.Map<List<TemperaturyDto>>(response);
             return mapped;
         }
+
+
     }
 }

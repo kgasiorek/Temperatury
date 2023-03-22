@@ -12,13 +12,10 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
-    public class TemperaturyRepository : ITemperaturyRepository
+    public class TemperaturyRepository : BaseRepository<Temperatury>, ITemperaturyRepository
     {
-        private readonly PomTempContext _dbContext;
-
-        public TemperaturyRepository(PomTempContext dbContext)
+        public TemperaturyRepository(PomTempContext dbContext) : base(dbContext)
         {
-            _dbContext = dbContext;
         }
 
         public async Task<List<Temperatury>> GetAllTemperaturyAsync()
