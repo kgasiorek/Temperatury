@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.DataModels
+namespace Domain.SettingsEntities
 {
-    public class PomiaryDlaPomDto
+    public class ApplicationSettings
     {
         public int Id { get; set; }
-        public int ZmiennaTempId { get; set; }
-        public ZmienneTempDto ZmienneTemp { get; set;}
+        public string? Test { get; set; }
     }
 }

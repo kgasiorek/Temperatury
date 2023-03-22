@@ -1,5 +1,6 @@
 ﻿using Application.DataModels;
 using Application.Interfaces.Repository;
+using Application.Interfaces.Repository.TemperaturyRepositoriesInterfaces;
 using Application.Interfaces.Services;
 using AutoMapper;
 using Domain.Entities.PomTemp;
@@ -30,7 +31,7 @@ namespace Application.Services
         }
         public async Task<List<TemperaturyDto>> GetTemperaturiesForDashboardAsync()
         {
-            var response = await _temperaturaRepository.GetLastTenTemperaturiesAsync();
+            var response = await _temperaturaRepository.GetLastSixteenTemperaturiesAsync();
             var mapped = _mapper.Map<List<TemperaturyDto>>(response);
             return mapped;
         }

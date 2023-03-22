@@ -22,6 +22,6 @@ namespace Application.DataModels
 
         public bool UseAlarmMax { get; set; }
 
-        public ICollection<PomiaryDlaPomDto> Pomiary { get; set; }
+        public ICollection<MeasurmentsTemperaturesDto> Pomiary { get; set; }
     }
 }

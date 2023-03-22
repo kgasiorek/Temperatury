@@ -18,16 +18,16 @@ namespace Temperatury.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            
+            var data = _sensorsService.GetAllSensorsWithLastSixteenData();  
         }
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (firstRender)
-            {
-                await LoadData();
-                _timer = new Timer(async _ => await LoadData(), null, TimeSpan.Zero, TimeSpan.FromSeconds(10));
-                _loaded = true;
-            }
+            //if (firstRender)
+            //{
+            //    await LoadData();
+            //    _timer = new Timer(async _ => await LoadData(), null, TimeSpan.Zero, TimeSpan.FromSeconds(10));
+            //    _loaded = true;
+            //}
         }
 
         private async Task LoadData()

@@ -11,9 +11,14 @@ namespace Infrastructure.Repositories
 {
     public class BaseRepository<T> : IAsyncRepository<T> where T : class
     {
-        protected readonly PomTempContext _dbContext;
+        protected readonly DbContext _dbContext;
 
         public BaseRepository(PomTempContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        public BaseRepository(SettingsContext dbContext)
         {
             _dbContext = dbContext;
         }

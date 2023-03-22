@@ -1,5 +1,5 @@
 ﻿using Application.DataModels;
-using Application.Interfaces.Repository;
+using Application.Interfaces.Repository.TemperaturyRepositoriesInterfaces;
 using AutoMapper;
 using Domain.Entities.PomTemp;
 using Infrastructure.Context;
@@ -10,24 +10,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.Repositories.TemperaturyRepositories
 {
     public class TemperaturyRepository : BaseRepository<Temperatury>, ITemperaturyRepository
     {
+        PomTempContext _db { get; set; }
+
         public TemperaturyRepository(PomTempContext dbContext) : base(dbContext)
         {
+            _db = dbContext;
         }
 
         public async Task<List<Temperatury>> GetAllTemperaturyAsync()
         {
-            var response = await _dbContext.Temperatury.Where(x => x.TemperaturyId < 1000).ToListAsync();
+            var response = await _db.Temperatury.Where(x => x.TemperaturyId < 1000).ToListAsync();
             return response;
         }
-        public async Task<List<Temperatury>> GetLastTenTemperaturiesAsync()
+        public async Task<List<Temperatury>> GetLastSixteenTemperaturiesAsync()
         {
-            var last10Temperatury = await _dbContext.Temperatury
+            var last10Temperatury = await _db.Temperatury
                                 .OrderByDescending(t => t.Czas)
-                                .Take(10)
+                                .Take(60)
                                 .ToListAsync();
             return last10Temperatury;
         }

@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Interfaces.Repository
+namespace Application.Interfaces.Repository.TemperaturyRepositoriesInterfaces
 {
     public interface ITemperaturyRepository
     {
         Task<List<Temperatury>> GetAllTemperaturyAsync();
-        Task<List<Temperatury>> GetLastTenTemperaturiesAsync();
+        Task<List<Temperatury>> GetLastSixteenTemperaturiesAsync();
     }
 }

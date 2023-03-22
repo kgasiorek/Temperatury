@@ -1,6 +1,8 @@
 ﻿using Application.DataModels;
+using Application.DataModels.SettingsModels;
 using AutoMapper;
 using Domain.Entities.PomTemp;
+using Domain.SettingsEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,10 @@ namespace Application.Mapper
         public MappingProfile()
         {
             CreateMap<Temperatury, TemperaturyDto>();
+
+            CreateMap<SensorSettings, SensorsWithLastSixteenDataListView>();
+            CreateMap<Room, RoomDto>();
+            CreateMap<TypeOfSensor, TypeOfSensorDto>();
         }
     }
 }
