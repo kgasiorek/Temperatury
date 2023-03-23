@@ -1,3 +1,14 @@
-﻿<MudPaper>
-    <MudText></MudText>
-</MudPaper>
+﻿@if(_loaded)
+{
+    <MudPaper>
+        <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center">
+            <MudText Typo="Typo.body1" Align="Align.Center">@Sensor.Description</MudText>
+            <MudText Typo="Typo.h4">@Sensor.Measurments[0].Temperature °C</MudText>
+            <MudStack Row="true">
+                <MudText Typo="Typo.body1">@Math.Round((Sensor.Measurments[0].Temperature - Sensor.Measurments[1].Temperature),1) °C</MudText>
+                <MudText Typo="Typo.body1">@Math.Round((Sensor.Measurments[0].Temperature - Sensor.Measurments[59].Temperature),1) °C</MudText>
+            </MudStack>
+        </MudStack>
+        <Chart Config="_lineConfig"></Chart>
+    </MudPaper>
+}
