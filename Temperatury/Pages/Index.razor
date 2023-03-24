@@ -1,37 +1,53 @@
 ﻿@page "/"
 
-@if (_loaded)
-{
-    <MudText>Ostatnie odświeżenie @currentDateTime</MudText>
-    <MudText>Ostatnie pobranie danych z serwera @_sensors?[0].Measurments[0].Time</MudText>
-    <MudGrid>
-        <MudItem lg="6" md="6" sm="6" xs="6">
-            <MudPaper>
-                Karty
-            </MudPaper>
-            <MudRadioGroup T="int" SelectedOptionChanged="@CardSizeChanged" Required="true">
-                <MudRadio Option="1" Color="Color.Primary" UnCheckedColor="Color.Default" >Małe</MudRadio>
-                <MudRadio Option="2" Color="Color.Secondary" UnCheckedColor="Color.Default">Średnie</MudRadio>
-                <MudRadio Option="3" Color="Color.Success" UnCheckedColor="Color.Default">Duże</MudRadio>
-            </MudRadioGroup>
-        </MudItem>
-        <MudItem lg="6" md="6" sm="6" xs="6">
-            <MudPaper>
-                Podgląd mapy
-            </MudPaper>
-        </MudItem>
-    </MudGrid>
+<style>
+    .fade-in-out {
+        transition: opacity 0.5s ease-in-out;
+        opacity: 0;
+    }
 
-
-    <MudGrid>
-        @foreach (var sensor in _sensors)
-        {
-            <MudItem lg="@_cardSizeForLg" md="3" sm="4" xs="6" @onclick="@(() => _navigationManager.NavigateTo($"czujnik/{sensor.Id}"))">
-                <CardWithTemperature Sensor="sensor" @ref="AddChildComponentInstance" />
-            </MudItem>
+        .fade-in-out.loaded {
+            opacity: 1;
         }
-    </MudGrid>
-}
+
+        .fade-in-out.not-loaded {
+            opacity: 0;
+        }
+</style>
+
+<MudText>Ostatnie odświeżenie @currentDateTime</MudText>
+<MudText>Ostatnie pobranie danych z serwera @_sensors?[0].Measurments[0].Time</MudText>
+<MudGrid>
+    <MudItem xs="12" >
+        @if(_dataNotActual)
+        {
+            <MudAlert Style="width:100%" Variant="Variant.Filled" Severity="Severity.Error">
+                Dane nieaktualne
+            </MudAlert>
+        }
+    </MudItem>
+    <MudItem xs="6">
+        <MudRadioGroup T="int" SelectedOptionChanged="@CardSizeChanged" Disabled="@(!_refreshed || !_loaded)">
+            <MudRadio Option="1" Color="Color.Primary" UnCheckedColor="Color.Default">Małe</MudRadio>
+            <MudRadio Option="2" Color="Color.Primary" UnCheckedColor="Color.Default">Średnie</MudRadio>
+            <MudRadio Option="3" Color="Color.Primary" UnCheckedColor="Color.Default">Duże</MudRadio>
+        </MudRadioGroup>
+    </MudItem>
+
+    <MudItem xs="12" Style="width:100%">
+        <MudGrid Justify="Justify.SpaceBetween" Spacing="1">
+            @if (_loaded)
+            {
+                @foreach (var sensor in _sensors)
+                {
+                    <MudItem lg="@_cardSizeForLg" md="@_cardSizeForMd" @onclick="@(() => _navigationManager.NavigateTo($"czujnik/{sensor.Id}"))" Class="@(_refreshed ? "fade-in-out loaded" : "fade-in-out not-loaded")">
+                        <CardWithTemperature Sensor="sensor" @ref="AddChildComponentInstance" cardSize="cardSize" />
+                    </MudItem>
+                }
+            }
+        </MudGrid>
+    </MudItem>
+</MudGrid>
 
 
 

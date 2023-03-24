@@ -7,13 +7,15 @@ using Microsoft.AspNetCore.Components.Web;
 using ApexCharts;
 using MudBlazor;
 using static MudBlazor.CategoryTypes;
+using Application.Enums;
 
 namespace Temperatury.Pages.Components
 {
-    public partial class CardWithTemperature
+    public partial class CardWithTemperature : IDisposable
     {
         [Parameter] public SensorsWithLastSixteenDataListView Sensor { get; set; }
         [Parameter] public EventCallback<string> NewDataRecieved { get; set; }
+        [Parameter] public CardSize cardSize { get; set; }
         private ApexChartOptions<MeasurmentsTemperaturesDto> options;
         private ApexChart<MeasurmentsTemperaturesDto> _chart;
         bool _loaded = false;
@@ -86,6 +88,11 @@ namespace Temperatury.Pages.Components
                 return "background-color:blue;opacity:0.6;";
             }
             return "background-color:red;opacity:0.6";
+        }
+
+        public void Dispose()
+        {
+            _chart.Dispose();
         }
     }
 }

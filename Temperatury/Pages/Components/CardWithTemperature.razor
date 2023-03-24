@@ -1,55 +1,64 @@
 ﻿@using ApexCharts;
 
+
 @if (_loaded)
 {
     <MudPaper Class="pl-0 ma-0 cursor-pointer" Style="border: dotted 1px grey;user-select: none;" Elevation="8">
         <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center" Spacing="2">
-            <MudText Typo="Typo.body1" Align="MudBlazor.Align.Center"><b>@Sensor.Description</b></MudText>
-            <MudText Typo="Typo.h4">@Sensor.Measurments[0].Temperature°C</MudText>
-            <MudStack Row="true" Spacing="10" Class="ma-0">
-            </MudStack>
-            <MudStack Row="true" Spacing="10">
-                <MudStack Spacing="0" Justify="Justify.Center" AlignItems="AlignItems.Center">
-                    <MudIcon Icon="@(Sensor.Measurments[1].Temperature < Sensor.Measurments[0].Temperature ? Icons.Material.Rounded.ArrowCircleUp : Icons.Material.Rounded.ArrowCircleDown)"
-                             Color="@(Sensor.Measurments[1].Temperature < Sensor.Measurments[0].Temperature ? MudBlazor.Color.Success : MudBlazor.Color.Error)"
-                             Size="Size.Small"
-                             Style="opacity: 0.8" />
-                    <MudText Typo="Typo.subtitle2" Align="MudBlazor.Align.Justify">Minuta</MudText>
-                    <MudText Typo="Typo.body1" Align="MudBlazor.Align.Justify">@Math.Round((Sensor.Measurments[0].Temperature - Sensor.Measurments[1].Temperature),1) °C</MudText>
+            <MudText Typo="@(cardSize == CardSize.Small ? Typo.subtitle2 : Typo.body1)" Align="MudBlazor.Align.Center" Style="@(cardSize == CardSize.Small ? "height:40px;" : "height:50px;")">@Sensor.Description</MudText>
+            <MudText Typo="@(cardSize == CardSize.Small ? Typo.h4 : Typo.h4)">@Sensor.Measurments[0].Temperature°C</MudText>
+            @if (cardSize is not Application.Enums.CardSize.Small)
+            {
+                <MudStack Row="true" Spacing="10">
+                    <MudStack Spacing="0" Justify="Justify.Center" AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@(Sensor.Measurments[1].Temperature < Sensor.Measurments[0].Temperature ? Icons.Material.Rounded.ArrowCircleUp : Icons.Material.Rounded.ArrowCircleDown)"
+                         Color="@(Sensor.Measurments[1].Temperature < Sensor.Measurments[0].Temperature ? MudBlazor.Color.Success : MudBlazor.Color.Error)"
+                         Size="Size.Small"
+                         Style="opacity: 0.8" />
+                        <MudText Typo="Typo.subtitle2" Align="MudBlazor.Align.Justify">Minuta</MudText>
+                        <MudText Typo="Typo.body1" Align="MudBlazor.Align.Justify">@Math.Round((Sensor.Measurments[0].Temperature - Sensor.Measurments[1].Temperature),1) °C</MudText>
+                    </MudStack>
+                    <MudStack Spacing="0" Justify="Justify.Center" AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@(Sensor.Measurments[59].Temperature < Sensor.Measurments[0].Temperature ? Icons.Material.Rounded.ArrowCircleUp : Icons.Material.Rounded.ArrowCircleDown)"
+                         Color="@(Sensor.Measurments[59].Temperature < Sensor.Measurments[0].Temperature ? MudBlazor.Color.Success : MudBlazor.Color.Error)"
+                         Size="Size.Small"
+                         Style="opacity: 0.8" />
+                        <MudText Typo="Typo.subtitle2" Align="MudBlazor.Align.Justify">Godzina</MudText>
+                        <MudText Typo="Typo.body1" Align="MudBlazor.Align.Justify">@Math.Round((Sensor.Measurments[0].Temperature - Sensor.Measurments[59].Temperature),1) °C</MudText>
+                    </MudStack>
                 </MudStack>
-                <MudStack Spacing="0" Justify="Justify.Center" AlignItems="AlignItems.Center">
-                    <MudIcon Icon="@(Sensor.Measurments[59].Temperature < Sensor.Measurments[0].Temperature ? Icons.Material.Rounded.ArrowCircleUp : Icons.Material.Rounded.ArrowCircleDown)"
-                             Color="@(Sensor.Measurments[59].Temperature < Sensor.Measurments[0].Temperature ? MudBlazor.Color.Success : MudBlazor.Color.Error)"
-                             Size="Size.Small"
-                             Style="opacity: 0.8" />
-                    <MudText Typo="Typo.subtitle2" Align="MudBlazor.Align.Justify">Godzina</MudText>
-                    <MudText Typo="Typo.body1" Align="MudBlazor.Align.Justify">@Math.Round((Sensor.Measurments[0].Temperature - Sensor.Measurments[59].Temperature),1) °C</MudText>
-                </MudStack>
-            </MudStack>
+            }
         </MudStack>
-        <ApexChart TItem="MeasurmentsTemperaturesDto"
-                   XAxisType="XAxisType.Datetime"
-                   Options="options"
-                   @ref="_chart"
-                   Debug>
-        <ApexPointSeries TItem="MeasurmentsTemperaturesDto"
+        @if (cardSize is not Application.Enums.CardSize.Small)
+        {
+            <ApexChart TItem="MeasurmentsTemperaturesDto"
+               XAxisType="XAxisType.Datetime"
+               Options="options"
+               @ref="_chart"
+                      Debug>
+            <ApexPointSeries TItem="MeasurmentsTemperaturesDto"
                          Items="Sensor.Measurments"
                          Name="Temperatura"
                          SeriesType="SeriesType.Line"
                          XValue="@(e => e.Time.ToLocalTime())"
                          YValue="@(e => (decimal)e.Temperature)"
                          OrderBy="e=>e.X" />
-    </ApexChart>
-    <MudStack Row="true" Spacing="10" Justify="Justify.Center" AlignItems="AlignItems.Center">
-        <MudStack Spacing="0" Justify="Justify.Center" AlignItems="AlignItems.Center">
-            <MudText Typo="Typo.subtitle2" Align="MudBlazor.Align.Justify">Minimum</MudText>
-            <MudText Typo="Typo.subtitle2" Align="MudBlazor.Align.Justify">@Sensor.MinTemp°C</MudText>
-        </MudStack>
-        <MudStack Spacing="0" Justify="Justify.Center" AlignItems="AlignItems.Center">
-            <MudText Typo="Typo.subtitle2" Align="MudBlazor.Align.Justify">Maksimum</MudText>
-            <MudText Typo="Typo.subtitle2" Align="MudBlazor.Align.Justify">@Sensor.MaxTemp°C</MudText>
-        </MudStack>
-    </MudStack>
-    <MudPaper Height="15px" Width="100%" Elevation="2" Style="@AlarmColor()"></MudPaper>
-</MudPaper>
+        </ApexChart>
+        }
+
+        @if (cardSize is not Application.Enums.CardSize.Small)
+        {
+            <MudStack Row="true" Spacing="10" Justify="Justify.Center" AlignItems="AlignItems.Center">
+                <MudStack Spacing="0" Justify="Justify.Center" AlignItems="AlignItems.Center">
+                    <MudText Typo="Typo.subtitle2" Align="MudBlazor.Align.Justify">Minimum</MudText>
+                    <MudText Typo="Typo.subtitle2" Align="MudBlazor.Align.Justify">@Sensor.MinTemp°C</MudText>
+                </MudStack>
+                <MudStack Spacing="0" Justify="Justify.Center" AlignItems="AlignItems.Center">
+                    <MudText Typo="Typo.subtitle2" Align="MudBlazor.Align.Justify">Maksimum</MudText>
+                    <MudText Typo="Typo.subtitle2" Align="MudBlazor.Align.Justify">@Sensor.MaxTemp°C</MudText>
+                </MudStack>
+            </MudStack>
+        }
+        <MudPaper Height="15px" Width="100%" Elevation="2" Style="@AlarmColor()"></MudPaper>
+    </MudPaper>
 }

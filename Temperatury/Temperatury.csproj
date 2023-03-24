@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\**" />
+    <Content Remove="Models\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="Blazor-ApexCharts" Version="0.9.19-beta" />
@@ -21,7 +28,6 @@
 
   <ItemGroup>
     <Folder Include="Db\" />
-    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>
