@@ -11,8 +11,10 @@
 @using Temperatury
 @using Temperatury.Shared
 @using MudBlazor
-@using ChartJs.Blazor
 @using Temperatury.Pages.Components
+@using Application.DataModels.SettingsModels
+@using Application.DataModels
 
 @inject ITemperaturyService _temperaturyService;
+@inject NavigationManager _navigationManager;
 @inject ISensorsService _sensorsService;

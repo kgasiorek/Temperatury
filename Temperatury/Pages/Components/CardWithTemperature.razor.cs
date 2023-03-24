@@ -1,17 +1,12 @@
 ﻿using Application.DataModels;
 using Application.DataModels.SettingsModels;
-using ChartJs.Blazor.Common.Axes.Ticks;
-using ChartJs.Blazor.Common.Axes;
-using ChartJs.Blazor.LineChart;
-using ChartJs.Blazor.Util;
 using Microsoft.AspNetCore.Components;
 using System.Diagnostics.Metrics;
-using ChartJs.Blazor.Common;
 using Azure;
-using ChartJs.Blazor.Common.Time;
-using ChartJs.Blazor.Common.Enums;
-using ChartJs.Blazor.PieChart;
 using Microsoft.AspNetCore.Components.Web;
+using ApexCharts;
+using MudBlazor;
+using static MudBlazor.CategoryTypes;
 
 namespace Temperatury.Pages.Components
 {
@@ -19,95 +14,80 @@ namespace Temperatury.Pages.Components
     {
         [Parameter] public SensorsWithLastSixteenDataListView Sensor { get; set; }
         [Parameter] public EventCallback<string> NewDataRecieved { get; set; }
-        LineConfig _lineConfig { get; set; }
-        LineDataset<Point> _lineDataset { get; set; }
+        private ApexChartOptions<MeasurmentsTemperaturesDto> options;
+        private ApexChart<MeasurmentsTemperaturesDto> _chart;
         bool _loaded = false;
 
         protected override async Task OnInitializedAsync()
         {
-            await ConfigureNewDataset();
-            CreateConfigForChart();
+            options = new ApexChartOptions<MeasurmentsTemperaturesDto>
+            {
+                Chart = new ApexCharts.Chart
+                {
+                    Toolbar = new Toolbar
+                    {
+                        AutoSelected = AutoSelected.Pan,
+                        Show = false
+                    },
+                },
+                Stroke = new Stroke
+                {
+                    Curve = Curve.Smooth,
+                    Width = 2,
+                },
+                Tooltip = new ApexCharts.Tooltip { X = new TooltipX { Format = @"HH:mm", Show = false } },
+                Yaxis = new List<YAxis>
+                {
+                    new YAxis
+                    {
+                        DecimalsInFloat = 1,
+                        TickAmount = 2,
+                    }
+                },
+                Xaxis = new XAxis
+                {
+                    Labels = new XAxisLabels
+                    {
+                        Show = false,
+                    }
+                },
+                Fill = new Fill
+                {
+                    Type = new List<FillType> { FillType.Gradient },
+                    Gradient = new FillGradient
+                    {
+                        Type = GradientType.Vertical,
+                        ShadeIntensity = 1,
+                        OpacityFrom = 1,
+                        OpacityTo = 1,
+                        GradientToColors = new List<string> { "#0045ff", "#00ff29", "#ff5959" },
+                        Stops = new List<double> { 20, 70, 100 }
+                    },
+                },
+            };
             _loaded = true;
             StateHasChanged();
         }
 
-        public async Task ConfigureNewDataset()
-        {
-            _lineDataset = new LineDataset<Point>
-            {
-                Label = "Temperatura",
-                BorderColor = ColorUtil.ColorString(52, 131, 235, 1),
-                BorderWidth = 1,
-                Fill = false,
-                PointRadius = 1,
-                PointBorderWidth = 0
-            };
-            await RefreshDataInChart();
-        }
-
         public async Task RefreshDataInChart()
         {
-            _lineDataset.Clear();
-            var temperatureData = Sensor.Measurments.OrderBy(x => x.Time).Select((x, index) => new { Time = index, Temperature = x.Temperature }).ToList();
-            _lineDataset.AddRange(temperatureData.Select(x => new Point((double)x.Time, x.Temperature)));
             await InvokeAsync(StateHasChanged);
+            await _chart.UpdateSeriesAsync(true);
         }
 
-        private void CreateConfigForChart()
+        private string AlarmColor()
         {
-            _lineConfig = new LineConfig
+            if(Sensor.Measurments[0].Temperature > Sensor.MinTemp && Sensor.Measurments[0].Temperature < Sensor.MaxTemp)
             {
-                Options = new LineOptions
-                {
-                    Tooltips = new Tooltips
-                    {
-                        Enabled = true,
-                        Mode = InteractionMode.Nearest,
-                        Intersect = true,
-                        Position = TooltipPosition.Nearest,
-                    },
-                    Legend = new Legend
-                    {
-                        Display = false,
-                    },
-                    Scales = new Scales
-                    {
-                        XAxes = new List<CartesianAxis>
-                        {
-                            new LinearCartesianAxis
-                            {
-                                GridLines = new GridLines
-                                {
-                                    Display = false
-                                },
-                                Ticks = new LinearCartesianTicks
-                                {
-                                    Display = false
-                                },
-                            }
-                        },
-                        YAxes = new List<CartesianAxis>
-                        {
-                            new LinearCartesianAxis
-                            {
-                                GridLines = new GridLines
-                                {
-                                    Display = true
-                                },
-                                Ticks = new LinearCartesianTicks
-                                {
-                                    AutoSkip = true,
-                                    StepSize = 10
-                                }
-                            },
-                        }
-                    }
-                }
-            };
-
-            _lineConfig.Data.Datasets.Add(_lineDataset);
-            StateHasChanged();
+                return "background-color:green;opacity:0.6;";
+            }
+            if (Sensor.Measurments[0].Temperature < Sensor.MinTemp)
+            {
+                return "background-color:blue;opacity:0.6;";
+            }
+            return "background-color:red;opacity:0.6";
         }
     }
-
 }
+
+

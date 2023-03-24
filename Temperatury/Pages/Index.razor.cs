@@ -8,12 +8,7 @@ using Timer = System.Threading.Timer;
 using Application.DataModels.SettingsModels;
 using MudBlazor;
 using System.Collections.Generic;
-using ChartJs.Blazor.PieChart;
-using ChartJs.Blazor.Common;
-using ChartJs.Blazor.Util;
-using ChartJs.Blazor.LineChart;
 using System.Data;
-using ChartJs.Blazor.Common.Enums;
 using System.Drawing;
 using Temperatury.Pages.Components;
 
@@ -27,6 +22,9 @@ namespace Temperatury.Pages
         private bool _isDisposed = false;
         private List<SensorsWithLastSixteenDataListView> _sensors;
         private List<CardWithTemperature> CardWithTemperatureInstances = new();
+        private int _cardSizeForLg = 2;
+        private int CardValue = 50;
+        string[] labels = new string[] { "Małe", "Średnie", "Duże" };
 
 
         protected override async Task OnInitializedAsync()
@@ -41,7 +39,7 @@ namespace Temperatury.Pages
         {
             if (firstRender)
             {
-               
+
             }
         }
 
@@ -51,6 +49,24 @@ namespace Temperatury.Pages
             currentDateTime = DateTime.Now;
             await RefreshChildData();
             await InvokeAsync(StateHasChanged);
+        }
+
+        private void CardSizeChanged(int newValue)
+        {
+            switch (newValue)
+            {
+                case 1:
+                    _cardSizeForLg = 1;
+                    break;
+                case 2:
+                    _cardSizeForLg = 2;
+                    break;
+                case 3:
+                    _cardSizeForLg = 4;
+                    break;
+                default: break;
+            }
+
         }
 
         private CardWithTemperature AddChildComponentInstance

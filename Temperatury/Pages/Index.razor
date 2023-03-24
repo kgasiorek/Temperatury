@@ -4,11 +4,29 @@
 {
     <MudText>Ostatnie odświeżenie @currentDateTime</MudText>
     <MudText>Ostatnie pobranie danych z serwera @_sensors?[0].Measurments[0].Time</MudText>
+    <MudGrid>
+        <MudItem lg="6" md="6" sm="6" xs="6">
+            <MudPaper>
+                Karty
+            </MudPaper>
+            <MudRadioGroup T="int" SelectedOptionChanged="@CardSizeChanged" Required="true">
+                <MudRadio Option="1" Color="Color.Primary" UnCheckedColor="Color.Default" >Małe</MudRadio>
+                <MudRadio Option="2" Color="Color.Secondary" UnCheckedColor="Color.Default">Średnie</MudRadio>
+                <MudRadio Option="3" Color="Color.Success" UnCheckedColor="Color.Default">Duże</MudRadio>
+            </MudRadioGroup>
+        </MudItem>
+        <MudItem lg="6" md="6" sm="6" xs="6">
+            <MudPaper>
+                Podgląd mapy
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+
 
     <MudGrid>
         @foreach (var sensor in _sensors)
         {
-            <MudItem lg="2" md="3" sm="4" xs="6">
+            <MudItem lg="@_cardSizeForLg" md="3" sm="4" xs="6" @onclick="@(() => _navigationManager.NavigateTo($"czujnik/{sensor.Id}"))">
                 <CardWithTemperature Sensor="sensor" @ref="AddChildComponentInstance" />
             </MudItem>
         }
