@@ -31,17 +31,17 @@ namespace Temperatury.Pages
 
         protected override async Task OnInitializedAsync()
         {
-
+            await LoadData();
+            var timeSpan = _sensors[0].Measurments[0].Time.AddSeconds(65) - DateTime.Now;
+            _timer = new Timer(async _ => await LoadData(), null, timeSpan, TimeSpan.FromSeconds(60));
+            _loaded = true;
+            StateHasChanged();
         }
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
-                await LoadData();
-                var timeSpan = _sensors[0].Measurments[0].Time.AddSeconds(65) - DateTime.Now;
-                _timer = new Timer(async _ => await LoadData(), null, timeSpan, TimeSpan.FromSeconds(60));
-                _loaded = true;
-                StateHasChanged();
+               
             }
         }
 
@@ -80,6 +80,7 @@ namespace Temperatury.Pages
         public void Dispose()
         {
             _isDisposed = true;
+            _timer.Dispose();
         }
 
     }

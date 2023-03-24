@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Db\" />
-    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

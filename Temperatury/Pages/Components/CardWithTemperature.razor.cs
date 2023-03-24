@@ -23,11 +23,6 @@ namespace Temperatury.Pages.Components
         LineDataset<Point> _lineDataset { get; set; }
         bool _loaded = false;
 
-
-        private async Task ProductSelected(MouseEventArgs e, string name)
-        {
-            await NewDataRecieved.InvokeAsync(name);
-        }
         protected override async Task OnInitializedAsync()
         {
             await ConfigureNewDataset();
@@ -64,6 +59,13 @@ namespace Temperatury.Pages.Components
             {
                 Options = new LineOptions
                 {
+                    Tooltips = new Tooltips
+                    {
+                        Enabled = true,
+                        Mode = InteractionMode.Nearest,
+                        Intersect = true,
+                        Position = TooltipPosition.Nearest,
+                    },
                     Legend = new Legend
                     {
                         Display = false,
@@ -81,7 +83,7 @@ namespace Temperatury.Pages.Components
                                 Ticks = new LinearCartesianTicks
                                 {
                                     Display = false
-                                }
+                                },
                             }
                         },
                         YAxes = new List<CartesianAxis>
