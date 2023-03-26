@@ -49,12 +49,8 @@ namespace Temperatury.Pages
             {
                 _dataNotActual = false;
             }
-
-
-            _timer = new Timer(async _ => await LoadData(), null, timeOffsetToRun, TimeSpan.FromSeconds(60));
+            _timer = new Timer(async _ => await LoadData(), null, timeOffsetToRun, TimeSpan.FromMinutes(1));
             _loaded = true;
-            await Task.Delay(1000);
-            _refreshed = true;
             StateHasChanged();
         }
 
@@ -62,8 +58,8 @@ namespace Temperatury.Pages
         {
             _sensors = await LoadDataForDashboard();
             currentDateTime = DateTime.Now;
-            await RefreshChildData();
             await InvokeAsync(StateHasChanged);
+            await RefreshChildData();
         }
 
         private async void CardSizeChanged(int newValue)
@@ -72,6 +68,7 @@ namespace Temperatury.Pages
             await Task.Delay(500);
             CardWithTemperatureInstances.Clear();
             _timer.Dispose();
+            _loaded = false;
             switch (newValue)
             {
                 case 1:
@@ -92,6 +89,8 @@ namespace Temperatury.Pages
                 default: break;
             }
             await CreateCards();
+            _refreshed = true;
+            await InvokeAsync(StateHasChanged);
         }
 
         private CardWithTemperature AddChildComponentInstance
@@ -118,11 +117,6 @@ namespace Temperatury.Pages
             {
 
             }
-        }
-
-        private string GetFadeInOutClass()
-        {
-            return _refreshed ? "fade-in-out loaded" : "fade-in-out not-loaded";
         }
 
         private async Task<List<SensorsWithLastSixteenDataListView>> LoadDataForDashboard()

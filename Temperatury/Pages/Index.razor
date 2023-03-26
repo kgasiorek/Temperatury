@@ -27,20 +27,20 @@
         }
     </MudItem>
     <MudItem xs="6">
-        <MudRadioGroup T="int" SelectedOptionChanged="@CardSizeChanged" Disabled="@(!_refreshed || !_loaded)">
+        <MudRadioGroup T="int" SelectedOptionChanged="@CardSizeChanged" Disabled="@(!_loaded)">
             <MudRadio Option="1" Color="Color.Primary" UnCheckedColor="Color.Default">Małe</MudRadio>
             <MudRadio Option="2" Color="Color.Primary" UnCheckedColor="Color.Default">Średnie</MudRadio>
             <MudRadio Option="3" Color="Color.Primary" UnCheckedColor="Color.Default">Duże</MudRadio>
         </MudRadioGroup>
     </MudItem>
 
-    <MudItem xs="12" Style="width:100%">
+    <MudItem xs="12" Style="width:100%" Class="@(_refreshed ? "fade-in-out loaded" : "fade-in-out not-loaded")">
         <MudGrid Justify="Justify.SpaceBetween" Spacing="1">
             @if (_loaded)
             {
                 @foreach (var sensor in _sensors)
                 {
-                    <MudItem lg="@_cardSizeForLg" md="@_cardSizeForMd" @onclick="@(() => _navigationManager.NavigateTo($"czujnik/{sensor.Id}"))" Class="@(_refreshed ? "fade-in-out loaded" : "fade-in-out not-loaded")">
+                    <MudItem lg="@_cardSizeForLg" md="@_cardSizeForMd" @onclick="@(() => _navigationManager.NavigateTo($"czujnik/{sensor.Id}"))" >
                         <CardWithTemperature Sensor="sensor" @ref="AddChildComponentInstance" cardSize="cardSize" />
                     </MudItem>
                 }

@@ -73,8 +73,8 @@ namespace Temperatury.Pages.Components
 
         public async Task RefreshDataInChart()
         {
-            await InvokeAsync(StateHasChanged);
             await _chart.UpdateSeriesAsync(true);
+            await InvokeAsync(StateHasChanged);
         }
 
         private string AlarmColor()
