@@ -2,10 +2,10 @@
 
 <MudGrid Justify="Justify.Center">
     <MudItem xs="8">
-        <MudSelect @bind-Value="selectedSensor" Variant="Variant.Outlined" @onselectionchange="RefreshData">
-            @foreach (var sensor in Sensors)
+        <MudSelect Variant="Variant.Outlined" T="SensorsWithLastSixteenDataListView" ValueChanged="OnValueChanged">
+            @foreach (var sensor in Sensors)    
             {
-                <MudSelectItem Value="sensor">@sensor.Description (@sensor.OriginalName)</MudSelectItem>
+                <MudSelectItem Value="@sensor">@sensor.Description (@sensor.OriginalName)</MudSelectItem>
             }
         </MudSelect>
     </MudItem>
@@ -21,7 +21,8 @@
         </MudStack>
     </MudItem>
     <MudItem xs="2">
-        <MudButton FullWidth="true" Variant="Variant.Filled">Pobierz dane</MudButton>
+        <MudNumericField @bind-Value="TimeOffsetToLoadData" Label="Ilość minut" Variant="Variant.Outlined" T="int" />
+        <MudButton FullWidth="true" Variant="Variant.Filled" OnClick="GetData">Pobierz dane</MudButton>
     </MudItem>
     @if(_loaded)
     {
@@ -29,7 +30,7 @@
             <ApexChart TItem="TemperaturyDto"
                        XAxisType="XAxisType.Datetime"
                        Options="options"
-            @ref="_chart"
+                       @ref="_chart"
                       Debug>
             <ApexPointSeries TItem="TemperaturyDto"
                              Items="temperaturesBySensor"

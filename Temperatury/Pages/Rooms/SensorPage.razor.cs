@@ -17,11 +17,13 @@ namespace Temperatury.Pages.Rooms
         private DateTime now = DateTime.Now;
         private ApexChartOptions<TemperaturyDto> options;
         private ApexChart<TemperaturyDto> _chart;
+        private int TimeOffsetToLoadData = 1;
         TimeSpan? timeStart;
         TimeSpan? timeEnd;
         List<TemperaturyDto> temperaturesBySensor = new();
         SensorsWithLastSixteenDataListView selectedSensor;
         private bool _loaded = false;
+
         protected override async Task OnInitializedAsync()
         {
             CreateChart();
@@ -37,7 +39,7 @@ namespace Temperatury.Pages.Rooms
         {
             var startDate = _dateRange.Start.Value.AddHours(timeStart.Value.TotalHours);
             var endDate = _dateRange.End.Value.AddHours(timeEnd.Value.TotalHours);
-            return await _temperaturyService.GetTemperaturiesForSensorByStartAndEndDateAsync(startDate, endDate, selectedSensor.OriginalName);
+            return await _temperaturyService.GetTemperaturiesForSensorByStartAndEndDateAsync(startDate, endDate, selectedSensor.OriginalName, TimeOffsetToLoadData);
         }
 
         private void CreateChart()
@@ -126,10 +128,19 @@ namespace Temperatury.Pages.Rooms
             };
         }
 
-        private async Task RefreshData()
+        private async Task GetData()
         {
-            await _chart.UpdateSeriesAsync();
+            _loaded = false;
+            temperaturesBySensor = await LoadDataForDashboard();
+            _loaded = true;
+        }
+
+        private void OnValueChanged(SensorsWithLastSixteenDataListView selected)
+        {
+            selectedSensor = selected;
+            _chart.UpdateSeriesAsync();
             StateHasChanged();
+            // Do other stuff
         }
 
         public void Dispose()

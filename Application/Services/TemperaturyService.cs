@@ -36,9 +36,9 @@ namespace Application.Services
             return mapped;
         }
 
-        public async Task<List<TemperaturyDto>> GetTemperaturiesForSensorByStartAndEndDateAsync(DateTime startDate, DateTime endDate, string sensorText)
+        public async Task<List<TemperaturyDto>> GetTemperaturiesForSensorByStartAndEndDateAsync(DateTime startDate, DateTime endDate, string sensorText, int timeOffsetToLoadData)
         {
-            var response = await _temperaturaRepository.GetTemperaturiesForSensorByStartAndEndDate(startDate, endDate, sensorText);
+            var response = await _temperaturaRepository.GetTemperaturiesForSensorByStartAndEndDate(startDate, endDate, sensorText, timeOffsetToLoadData);
             var mapped = _mapper.Map<List<TemperaturyDto>>(response);
             return mapped;
         }
