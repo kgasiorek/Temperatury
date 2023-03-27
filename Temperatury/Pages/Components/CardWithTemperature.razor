@@ -5,7 +5,9 @@
 {
     <MudPaper Class="pl-0 ma-0 cursor-pointer" Style="border: dotted 1px grey;user-select: none;" Elevation="8">
         <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center" Spacing="2">
-            <MudText Typo="@(cardSize == CardSize.Small ? Typo.subtitle2 : Typo.body1)" Align="MudBlazor.Align.Center" Style="@(cardSize == CardSize.Small ? "height:40px;" : "height:50px;")">@Sensor.Description</MudText>
+            <MudText Typo="@(cardSize == CardSize.Small ? Typo.subtitle2 : Typo.body1)" Align="MudBlazor.Align.Center" Class="pa-1"
+                     Style="@(cardSize==CardSize.Small ? "height:40px;word-wrap: break-word;overflow-wrap: break-word;" : "height:50px;word-wrap: break-word;overflow-wrap: break-word;")">
+                     @Sensor.Description</MudText>
             <MudText Typo="@(cardSize == CardSize.Small ? Typo.h4 : Typo.h4)">@Sensor.Measurments[0].Temperature°C</MudText>
             @if (cardSize is not Application.Enums.CardSize.Small)
             {

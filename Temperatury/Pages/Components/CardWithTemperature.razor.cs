@@ -73,7 +73,18 @@ namespace Temperatury.Pages.Components
 
         public async Task RefreshDataInChart()
         {
-            await _chart.UpdateSeriesAsync(true);
+            try
+            {
+                if (cardSize != CardSize.Small)
+                {
+                    await _chart.UpdateSeriesAsync(true);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            
             await InvokeAsync(StateHasChanged);
         }
 
@@ -92,7 +103,17 @@ namespace Temperatury.Pages.Components
 
         public void Dispose()
         {
-            _chart.Dispose();
+            try
+            {
+                if (cardSize != CardSize.Small)
+                {
+                    _chart.Dispose();
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
     }
 }

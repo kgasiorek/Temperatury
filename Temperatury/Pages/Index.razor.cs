@@ -18,12 +18,14 @@ namespace Temperatury.Pages
     public partial class Index : IDisposable
     {
         private Timer _timer;
+        private int CurrentSelectedSensor = 0;
         private DateTime currentDateTime;
         private bool _loaded = false;
         private bool _refreshed = false;
         private bool _dataNotActual = false;
         private List<SensorsWithLastSixteenDataListView> _sensors;
         private List<CardWithTemperature> CardWithTemperatureInstances = new();
+        MudTabs tabs;
         private CardSize cardSize = CardSize.Medium;
         private int _cardSizeForLg = 2;
         private int _cardSizeForMd = 3;
@@ -33,7 +35,15 @@ namespace Temperatury.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            await CreateCards();
+            
+        }
+
+        protected override void OnAfterRender(bool firstRender) 
+        {
+            if(firstRender)
+            {
+                CardSizeChanged(2);
+            }
         }
 
         private async Task CreateCards()
@@ -67,7 +77,10 @@ namespace Temperatury.Pages
             _refreshed = false;
             await Task.Delay(500);
             CardWithTemperatureInstances.Clear();
-            _timer.Dispose();
+            if (_timer is not null)
+            {
+                _timer.Dispose();
+            }
             _loaded = false;
             switch (newValue)
             {
@@ -104,6 +117,12 @@ namespace Temperatury.Pages
             }
         }
 
+        void Activate(object id, int sensorId)
+        {
+            tabs.ActivatePanel(id);
+            CurrentSelectedSensor = sensorId;
+        }
+
         private async Task RefreshChildData()
         {
             try
@@ -126,7 +145,10 @@ namespace Temperatury.Pages
 
         public void Dispose()
         {
-            _timer.Dispose();
+            if(_timer is not null)
+            {
+                _timer.Dispose();
+            }
         }
     }
 }

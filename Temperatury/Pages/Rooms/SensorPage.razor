@@ -1,1 +1,45 @@
-﻿@page "/czujnik/{SensorId}"
+﻿@using ApexCharts
+
+<MudGrid Justify="Justify.Center">
+    <MudItem xs="8">
+        <MudSelect @bind-Value="selectedSensor" Variant="Variant.Outlined" @onselectionchange="RefreshData">
+            @foreach (var sensor in Sensors)
+            {
+                <MudSelectItem Value="sensor">@sensor.Description (@sensor.OriginalName)</MudSelectItem>
+            }
+        </MudSelect>
+    </MudItem>
+    <MudItem xs="6">
+        <MudStack Spacing="0">
+            <MudDateRangePicker Label="Wybierz zakres raportu" Editable="true" @bind-DateRange="_dateRange" Variant="Variant.Outlined" />
+            <MudItem xs="12">
+                <MudStack Row="true">
+                    <MudTimePicker Label="Godzina rozpoczęcia" Editable="true" @bind-Time="timeStart" Variant="Variant.Outlined" />
+                    <MudTimePicker Label="Godzina zakończenia" Editable="true" @bind-Time="timeEnd" Variant="Variant.Outlined" />
+                </MudStack>
+            </MudItem>
+        </MudStack>
+    </MudItem>
+    <MudItem xs="2">
+        <MudButton FullWidth="true" Variant="Variant.Filled">Pobierz dane</MudButton>
+    </MudItem>
+    @if(_loaded)
+    {
+        <MudItem xs="8">
+            <ApexChart TItem="TemperaturyDto"
+                       XAxisType="XAxisType.Datetime"
+                       Options="options"
+            @ref="_chart"
+                      Debug>
+            <ApexPointSeries TItem="TemperaturyDto"
+                             Items="temperaturesBySensor"
+                             Name="Temperatura"
+                             SeriesType="SeriesType.Line"
+                             XValue="@(e => e.Czas.ToLocalTime())"
+                             YValue="@(e => (decimal?)(double)e.GetType().GetProperty($"{selectedSensor.OriginalName}").GetValue(e))"
+                             OrderBy="e=>e.X" />
+        </ApexChart>
+    </MudItem>
+    }
+
+</MudGrid>

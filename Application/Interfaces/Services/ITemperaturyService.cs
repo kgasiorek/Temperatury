@@ -12,5 +12,6 @@ namespace Application.Interfaces.Services
     {
         Task<List<TemperaturyDto>> GetTemperaturyAsync();
         Task<List<TemperaturyDto>> GetTemperaturiesForDashboardAsync();
+        Task<List<TemperaturyDto>> GetTemperaturiesForSensorByStartAndEndDateAsync(DateTime startDate, DateTime endDate, string sensorText);
     }
 }

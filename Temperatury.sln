@@ -19,6 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{BCF0F6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9832B934-4D45-460D-A6DB-DFE221490856}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		dockerfile = dockerfile
 	EndProjectSection
 EndProject

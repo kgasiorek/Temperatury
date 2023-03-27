@@ -35,6 +35,14 @@ namespace Infrastructure.Repositories.TemperaturyRepositories
             return last10Temperatury;
         }
 
+        public async Task<List<Temperatury>> GetTemperaturiesForSensorByStartAndEndDate(DateTime startDate, DateTime endDate, string sensorText)
+        {
+            var temperatures = await _db.Temperatury
+                .OrderByDescending(t => t.Czas)
+                .Where(x => x.Czas >= startDate && x.Czas <= endDate)
+                .ToListAsync();
+            return temperatures;
+        }
     }
 
 }

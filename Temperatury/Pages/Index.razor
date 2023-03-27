@@ -15,40 +15,51 @@
         }
 </style>
 
-<MudText>Ostatnie odświeżenie @currentDateTime</MudText>
-<MudText>Ostatnie pobranie danych z serwera @_sensors?[0].Measurments[0].Time</MudText>
-<MudGrid>
-    <MudItem xs="12" >
-        @if(_dataNotActual)
-        {
-            <MudAlert Style="width:100%" Variant="Variant.Filled" Severity="Severity.Error">
-                Dane nieaktualne
-            </MudAlert>
-        }
-    </MudItem>
-    <MudItem xs="6">
-        <MudRadioGroup T="int" SelectedOptionChanged="@CardSizeChanged" Disabled="@(!_loaded)">
-            <MudRadio Option="1" Color="Color.Primary" UnCheckedColor="Color.Default">Małe</MudRadio>
-            <MudRadio Option="2" Color="Color.Primary" UnCheckedColor="Color.Default">Średnie</MudRadio>
-            <MudRadio Option="3" Color="Color.Primary" UnCheckedColor="Color.Default">Duże</MudRadio>
-        </MudRadioGroup>
-    </MudItem>
-
-    <MudItem xs="12" Style="width:100%" Class="@(_refreshed ? "fade-in-out loaded" : "fade-in-out not-loaded")">
-        <MudGrid Justify="Justify.SpaceBetween" Spacing="1">
-            @if (_loaded)
-            {
-                @foreach (var sensor in _sensors)
+@*<MudText>Ostatnie odświeżenie @currentDateTime</MudText>
+<MudText>Ostatnie pobranie danych z serwera @_sensors?[0].Measurments[0].Time</MudText>*@
+<MudTabs Elevation="2" Rounded="true" Centered="true" Class="my-6" Color="Color.Dark" Outlined="true" @ref="tabs">
+    <MudTabPanel Icon="@Icons.Material.Filled.CreditCard" Text="Karty" BadgeColor="Color.Error" Style="margin-bottom: 0px;margin-top: 0px;" ID="@("tab_cards")">
+        <MudGrid Justify="Justify.Center">
+            <MudItem xs="12">
+                @if (_dataNotActual)
                 {
-                    <MudItem lg="@_cardSizeForLg" md="@_cardSizeForMd" @onclick="@(() => _navigationManager.NavigateTo($"czujnik/{sensor.Id}"))" >
-                        <CardWithTemperature Sensor="sensor" @ref="AddChildComponentInstance" cardSize="cardSize" />
-                    </MudItem>
+                    <MudAlert Style="width:100%" Variant="Variant.Filled" Severity="Severity.Error">
+                        Dane nieaktualne
+                    </MudAlert>
                 }
-            }
+            </MudItem>
+            <MudItem xs="6" Style="margin-top: 0px;">
+                <MudRadioGroup T="int" SelectedOptionChanged="@CardSizeChanged">
+                    <MudGrid Justify="Justify.SpaceBetween">
+                        <MudRadio Option="1" Color="Color.Primary" UnCheckedColor="Color.Default" Placement="Placement.Bottom" Size="Size.Large" Dense="true">Małe</MudRadio>
+                        <MudRadio Option="2" Color="Color.Primary" UnCheckedColor="Color.Default" Placement="Placement.Bottom" Size="Size.Large" Dense="true">Średnie</MudRadio>
+                        <MudRadio Option="3" Color="Color.Primary" UnCheckedColor="Color.Default" Placement="Placement.Bottom" Size="Size.Large" Dense="true">Duże</MudRadio>
+                    </MudGrid>
+                </MudRadioGroup>
+            </MudItem>
+
+            <MudItem xs="12" Style="width:100%" Class="@(_refreshed ? "fade-in-out loaded" : "fade-in-out not-loaded")">
+                <MudGrid Justify="Justify.Center" Spacing="1">
+                    @if (_loaded)
+                    {
+                        @foreach (var sensor in _sensors)
+                        {
+                            <MudItem lg="@_cardSizeForLg" md="@_cardSizeForMd" @onclick="@(() => Activate("tab_details", sensor.Id))" Style="width:100%">
+                                <CardWithTemperature Sensor="sensor" @ref="AddChildComponentInstance" cardSize="cardSize" />
+                            </MudItem>
+                        }
+                    }
+                </MudGrid>
+            </MudItem>
         </MudGrid>
-    </MudItem>
-</MudGrid>
-
-
-
-
+    </MudTabPanel>
+    <MudTabPanel Icon="@Icons.Material.Filled.Map" Text="Mapa" BadgeColor="Color.Success" ID="@("tab_map")" />
+    <MudTabPanel Icon="@Icons.Material.Filled.DataUsage" Text="Raport" BadgeColor="Color.Success" ID="@("tab_report")" />
+    <MudTabPanel Icon="@Icons.Material.Filled.Details" Text="Szczegóły" BadgeColor="Color.Success" ID="@("tab_details")">
+        <CascadingValue Value="CurrentSelectedSensor">
+            <CascadingValue Value="_sensors">
+                <SensorPage />
+            </CascadingValue>
+        </CascadingValue>
+    </MudTabPanel>
+</MudTabs>
