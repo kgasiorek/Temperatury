@@ -29,12 +29,14 @@ namespace Application.Services
             _mapper = mapper;
         }
 
-        public async Task<List<SensorsWithLastSixteenDataListView>> GetAllSensorsWithLastSixteenData()
+
+
+        public async Task<List<SensorsWithMeasurmentDataListView>> GetAllSensorsWithLastSixteenData()
         {
             var sensors = await _sensorSettingsRepository.GetAllSensorSettings();
             var lastSixteenData = await _temperaturaRepository.GetLastSixteenTemperaturiesAsync();
 
-            var mappedSensors = _mapper.Map<List<SensorsWithLastSixteenDataListView>>(sensors);
+            var mappedSensors = _mapper.Map<List<SensorsWithMeasurmentDataListView>>(sensors);
             var mappedTemperatures = _mapper.Map<List<TemperaturyDto>>(lastSixteenData);
 
 
@@ -43,6 +45,21 @@ namespace Application.Services
                 sensor.Measurments.AddRange(CreateMeasurmentList(mappedTemperatures, int.Parse(Regex.Replace(sensor.OriginalName, @"\D", ""))));
             }
 
+            return mappedSensors;
+        }
+
+        public async Task<List<SensorsWithMeasurmentDataListView>> GetSensorsDataForReport(DateTime dateOfReport)
+        {
+            var sensors = await _sensorSettingsRepository.GetSensorsForReportWhichAreNeeded();
+            var lastSixteenData = await _temperaturaRepository.GetTemperaturesForOneDayReport(dateOfReport);
+
+            var mappedSensors = _mapper.Map<List<SensorsWithMeasurmentDataListView>>(sensors);
+            var mappedTemperatures = _mapper.Map<List<TemperaturyDto>>(lastSixteenData);
+
+            foreach (var sensor in mappedSensors)
+            {
+                sensor.Measurments.AddRange(CreateMeasurmentList(mappedTemperatures, int.Parse(Regex.Replace(sensor.OriginalName, @"\D", ""))));
+            }
             return mappedSensors;
         }
 
@@ -107,6 +124,7 @@ namespace Application.Services
 
             return result;
         }
+
 
     }
 }

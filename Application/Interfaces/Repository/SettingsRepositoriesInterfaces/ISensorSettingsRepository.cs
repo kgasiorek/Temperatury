@@ -11,5 +11,6 @@ namespace Application.Interfaces.Repository.SettingsRepositoriesInterfaces
     public interface ISensorSettingsRepository
     {
         Task<List<SensorSettings>> GetAllSensorSettings();
+        Task<List<SensorSettings>> GetSensorsForReportWhichAreNeeded();
     }
 }

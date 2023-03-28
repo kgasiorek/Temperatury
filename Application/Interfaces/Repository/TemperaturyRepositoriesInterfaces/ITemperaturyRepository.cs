@@ -13,5 +13,6 @@ namespace Application.Interfaces.Repository.TemperaturyRepositoriesInterfaces
         Task<List<Temperatury>> GetAllTemperaturyAsync();
         Task<List<Temperatury>> GetLastSixteenTemperaturiesAsync();
         Task<List<Temperatury>> GetTemperaturiesForSensorByStartAndEndDate(DateTime startDate, DateTime endDate, string sensorText, int timeOffsetToLoadData);
+        Task<List<Temperatury>> GetTemperaturesForOneDayReport(DateTime date);
     }
 }

@@ -13,6 +13,6 @@ namespace Application.DataModels.SettingsModels
         public string? Name { get; set; }
         public string? Description { get; set; }
         public string? UrlToScreenshot { get; set; }
-        public virtual ICollection<SensorsWithLastSixteenDataListView> Sensors { get; set; }
+        public virtual ICollection<SensorsWithMeasurmentDataListView> Sensors { get; set; }
     }
 }

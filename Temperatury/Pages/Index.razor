@@ -52,7 +52,7 @@
         </MudGrid>
     </MudTabPanel>
     <MudTabPanel Icon="@Icons.Material.Filled.Map" Text="Mapa" BadgeColor="Color.Success" ID="@("tab_map")" />
-    <MudTabPanel Icon="@Icons.Material.Filled.DataUsage" Text="Raport" BadgeColor="Color.Success" ID="@("tab_report")">
+    <MudTabPanel Icon="@Icons.Material.Filled.DataUsage" Text="Raport" BadgeColor="Color.Success" ID="@("tab_report")" OnClick="@(() => _timer.Dispose())">
         <ReportPage />
     </MudTabPanel>
     <MudTabPanel Icon="@Icons.Material.Filled.Details" Text="Szczegóły" BadgeColor="Color.Success" ID="@("tab_details")" OnClick="@(() => _timer.Dispose())">

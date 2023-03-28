@@ -44,6 +44,15 @@ namespace Infrastructure.Repositories.TemperaturyRepositories
             var temperaturesFiltered = temperatures.Where((x, index) => index % timeOffsetToLoadData == 0).ToList();
             return temperaturesFiltered;
         }
+
+        public async Task<List<Temperatury>> GetTemperaturesForOneDayReport(DateTime date)
+        {
+            var temperatures = await _db.Temperatury
+                .OrderByDescending(t => t.Czas)
+                .Where(x => x.Czas >= date && x.Czas <= date.AddHours(23.99))
+                .ToListAsync();
+            return temperatures;
+        }
     }
 
 }

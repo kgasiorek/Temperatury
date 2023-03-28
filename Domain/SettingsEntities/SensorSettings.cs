@@ -21,4 +21,6 @@ public class SensorSettings
 
     public int? TypeOfSensorId { get; set; }
     public TypeOfSensor? TypeOfSensor { get; set; }
+
+    public bool NeededForReport { get; set; }
 }

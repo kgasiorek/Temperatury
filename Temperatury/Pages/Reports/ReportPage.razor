@@ -1,11 +1,78 @@
 ﻿@inject IJSRuntime JsRuntime
 
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    table#alter tr:nth-child(even) {
+        background-color: #eee;
+    }
+
+    table#alter tr:nth-child(odd) {
+        background-color: #fff;
+    }
+
+    table#alter th {
+        color: white;
+        background-color: gray;
+    }
+</style>
+
 <MudGrid Class="mt-2" Justify="Justify.Center">
-    <MudItem xs="3">
-        <MudDatePicker></MudDatePicker>
-        <MudButton OnClick="@PrintPage">Drukuj</MudButton>
-    </MudItem>
-    <MudItem xs="8">
-        <A4PageReportForPrint />
-    </MudItem>
+    @if (_loaded)
+    {
+        <MudItem xs="3">
+            <MudDatePicker DateChanged="DateChanged" MaxDate="@DateTime.Today"></MudDatePicker>
+            <MudButton OnClick="@PrintPage">Drukuj</MudButton>
+            <MudList Clickable="true" Dense="true" DisableGutters="true" Style="height:80vh;overflow:auto;">
+                @foreach (var sensor in Sensors.FirstOrDefault().Measurments)
+                {
+                    <MudListItem @onclick="() => ChangeSelectedTime(sensor.Time)">@sensor.Time.ToShortTimeString()</MudListItem>
+                }
+            </MudList>
+
+        </MudItem>
+        <MudItem xs="8" Style="display: flex; justify-content: center; width: 100%;">
+            <MudPaper Elevation="5" Class="pa-2" Style="width: 21cm;height: 29.7cm;">
+                <div id="report">
+                    <MudStack Row="true" Justify="Justify.SpaceBetween">
+                        <MudText Style="font-size:12px;">Firma: Bomadek Sp. zo.o., 66-132 Trzebiechów, ul. Słoneczna 16</MudText>
+                        <MudText Style="font-size:12px;">@DateTime.Now</MudText>
+                    </MudStack>
+                    <MudDivider DividerType="DividerType.Middle" Class="my-6" Light="true" />
+                    <MudText Style="font-size:14px;" Align="Align.Right">Temp wersja 0.1</MudText>
+                    <MudText Style="font-size:18px;"><b>Raport: Wartości temperatur dla wybranych pomieszczeń chłodniczych</b></MudText>
+                    @if (selectedTime is not null)
+                    {
+                        <MudText Style="font-size:14px;">Dla dnia i godziny: @selectedTime</MudText>
+                        <div style="display: flex; justify-content: center; width: 100%;">
+                            <table width="90%" style="border: 1px solid black;">
+                                <tr>
+                                    <th style="border: 2px solid black; padding: 10px;">Lp.</th>
+                                    <th style="border: 2px solid black; padding: 10px;">Nazwa</th>
+                                    <th style="border: 2px solid black; padding: 10px;">Temperatura</th>
+                                    <th style="border: 2px solid black; padding: 10px;">Status</th>
+                                </tr>
+                                @foreach (var (sensor, index) in Sensors.Select((value, i) => (value, i)))
+                                {
+                                    <tr>
+                                        <td style="border: 1px solid black; padding: 2px;">@(index + 1)</td>
+                                        <td style="border: 1px solid black; padding: 2px;">@sensor.Description</td>
+                                        <td style="border: 1px solid black; padding: 2px;">@sensor.Measurments.Where(x => x.Time == selectedTime).FirstOrDefault().Temperature</td>
+                                        <td style="border: 1px solid black; padding: 2px;"></td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    }
+                </div>
+            </MudPaper>
+        </MudItem>
+    }
 </MudGrid>

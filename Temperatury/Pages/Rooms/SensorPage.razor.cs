@@ -9,8 +9,8 @@ namespace Temperatury.Pages.Rooms;
 
 public partial class SensorPage : IDisposable
 {
-    [CascadingParameter] public SensorsWithLastSixteenDataListView SelectedSensor { get; set; }
-    [CascadingParameter] public List<SensorsWithLastSixteenDataListView> Sensors { get; set; }
+    [CascadingParameter] public SensorsWithMeasurmentDataListView SelectedSensor { get; set; }
+    [CascadingParameter] public List<SensorsWithMeasurmentDataListView> Sensors { get; set; }
     private MudDateRangePicker _picker;
     private DateRange _dateRange = new DateRange(DateTime.Today.Date.AddDays(-1), DateTime.Today);
     private DateTime now = DateTime.Now;
@@ -142,7 +142,7 @@ public partial class SensorPage : IDisposable
         _loaded = true;
     }
 
-    private async void OnValueChanged(SensorsWithLastSixteenDataListView selected)
+    private async void OnValueChanged(SensorsWithMeasurmentDataListView selected)
     {
         SelectedSensor = selected;
         options = ApexChartOptions();

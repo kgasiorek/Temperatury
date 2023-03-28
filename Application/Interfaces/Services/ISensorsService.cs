@@ -10,6 +10,7 @@ namespace Application.Interfaces.Services
 {
     public interface ISensorsService
     {
-        Task<List<SensorsWithLastSixteenDataListView>> GetAllSensorsWithLastSixteenData();
+        Task<List<SensorsWithMeasurmentDataListView>> GetAllSensorsWithLastSixteenData();
+        Task<List<SensorsWithMeasurmentDataListView>> GetSensorsDataForReport(DateTime dateOfReport);
     }
 }

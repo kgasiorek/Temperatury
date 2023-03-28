@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.DataModels.SettingsModels
 {
-    public class SensorsWithLastSixteenDataListView
+    public class SensorsWithMeasurmentDataListView
     {
         public int Id { get; set; }
         public string? OriginalName { get; set; }

@@ -17,7 +17,7 @@ namespace Application.Mapper
         {
             CreateMap<Temperatury, TemperaturyDto>();
 
-            CreateMap<SensorSettings, SensorsWithLastSixteenDataListView>();
+            CreateMap<SensorSettings, SensorsWithMeasurmentDataListView>();
             CreateMap<Room, RoomDto>();
             CreateMap<TypeOfSensor, TypeOfSensorDto>();
         }

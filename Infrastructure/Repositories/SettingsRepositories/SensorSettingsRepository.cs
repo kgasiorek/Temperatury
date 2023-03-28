@@ -25,5 +25,11 @@ namespace Infrastructure.Repositories.SettingsRepositories
             var response = await _db.SensorSettings.ToListAsync();
             return response;
         }
+
+        public async Task<List<SensorSettings>> GetSensorsForReportWhichAreNeeded()
+        {
+            var response = await _db.SensorSettings.Where(x => x.NeededForReport).ToListAsync();
+            return response;
+        }
     }
 }

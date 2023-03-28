@@ -11,6 +11,6 @@ namespace Application.DataModels.SettingsModels
     {
         public int Id { get; set; }
         public string? Name { get; set; }
-        public virtual ICollection<SensorsWithLastSixteenDataListView> Sensors { get; set; }
+        public virtual ICollection<SensorsWithMeasurmentDataListView> Sensors { get; set; }
     }
 }

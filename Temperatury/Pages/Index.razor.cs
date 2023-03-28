@@ -18,11 +18,11 @@ namespace Temperatury.Pages;
 public partial class Index : IDisposable
 {
     private Timer _timer;
-    private SensorsWithLastSixteenDataListView CurrentSelectedSensor;
+    private SensorsWithMeasurmentDataListView CurrentSelectedSensor;
     private bool _loaded = false;
     private bool _refreshed = false;
     private bool _dataNotActual = false;
-    private List<SensorsWithLastSixteenDataListView> _sensors;
+    private List<SensorsWithMeasurmentDataListView> _sensors;
     private List<CardWithTemperature> CardWithTemperatureInstances = new();
     MudTabs tabs;
     private CardSize cardSize = CardSize.Medium;
@@ -114,7 +114,7 @@ public partial class Index : IDisposable
         }
     }
 
-    void Activate(object id, SensorsWithLastSixteenDataListView sensor)
+    void Activate(object id, SensorsWithMeasurmentDataListView sensor)
     {
         CurrentSelectedSensor = sensor;
         if (_timer is not null)
@@ -139,7 +139,7 @@ public partial class Index : IDisposable
         }
     }
 
-    private async Task<List<SensorsWithLastSixteenDataListView>> LoadDataForDashboard()
+    private async Task<List<SensorsWithMeasurmentDataListView>> LoadDataForDashboard()
     {
         return await _sensorsService.GetAllSensorsWithLastSixteenData();
     }

@@ -13,7 +13,7 @@ namespace Temperatury.Pages.Components
 {
     public partial class CardWithTemperature : IDisposable
     {
-        [Parameter] public SensorsWithLastSixteenDataListView Sensor { get; set; }
+        [Parameter] public SensorsWithMeasurmentDataListView Sensor { get; set; }
         [Parameter] public EventCallback<string> NewDataRecieved { get; set; }
         [Parameter] public CardSize cardSize { get; set; }
         private ApexChartOptions<MeasurmentsTemperaturesDto> options;

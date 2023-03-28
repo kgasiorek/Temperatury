@@ -7,7 +7,7 @@
             <MudText Typo="Typo.h6" Align="MudBlazor.Align.Center">
                 Pomieszczenie
             </MudText>
-            <MudSelect Variant="Variant.Outlined" T="SensorsWithLastSixteenDataListView" ValueChanged="OnValueChanged" Value="SelectedSensor" Dense="true">
+            <MudSelect Variant="Variant.Outlined" T="SensorsWithMeasurmentDataListView" ValueChanged="OnValueChanged" Value="SelectedSensor" Dense="true">
                 @foreach (var sensor in Sensors)
                 {
                     <MudSelectItem Value="@sensor">@sensor.Description (@sensor.OriginalName)</MudSelectItem>
