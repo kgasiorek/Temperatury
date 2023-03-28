@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Application.Enums
 {
-    public enum CardSize
+    public enum CardSize : byte
     {
-        Small,
-        Medium,
-        Big,
+        Small = 1,
+        Medium = 2,
+        Big = 3,
     }
 }

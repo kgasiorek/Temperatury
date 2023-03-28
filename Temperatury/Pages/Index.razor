@@ -16,7 +16,7 @@
 </style>
 
 <MudTabs Elevation="2" Rounded="true" Centered="true" Class="my-6" Color="Color.Dark" Outlined="true" @ref="tabs">
-    <MudTabPanel Icon="@Icons.Material.Filled.CreditCard" Text="Karty" BadgeColor="Color.Error" Style="margin-bottom: 0px;margin-top: 0px;" ID="@("tab_cards")">
+    <MudTabPanel Icon="@Icons.Material.Filled.CreditCard" Text="Karty" BadgeColor="Color.Error" Style="margin-bottom: 0px;margin-top: 0px;" ID="@("tab_cards")" OnClick="() => CardSizeChanged((byte)cardSize)">
         <MudGrid Justify="Justify.Center">
             <MudItem xs="12">
                 @if (_dataNotActual)
@@ -42,7 +42,7 @@
                     {
                         @foreach (var sensor in _sensors)
                         {
-                            <MudItem lg="@_cardSizeForLg" md="@_cardSizeForMd" @onclick="@(() => Activate("tab_details", sensor.Id))" Style="width:100%">
+                            <MudItem lg="@_cardSizeForLg" md="@_cardSizeForMd" @onclick="@(() => Activate("tab_details", sensor))" Style="width:100%">
                                 <CardWithTemperature Sensor="sensor" @ref="AddChildComponentInstance" cardSize="cardSize" />
                             </MudItem>
                         }
@@ -52,8 +52,10 @@
         </MudGrid>
     </MudTabPanel>
     <MudTabPanel Icon="@Icons.Material.Filled.Map" Text="Mapa" BadgeColor="Color.Success" ID="@("tab_map")" />
-    <MudTabPanel Icon="@Icons.Material.Filled.DataUsage" Text="Raport" BadgeColor="Color.Success" ID="@("tab_report")" />
-    <MudTabPanel Icon="@Icons.Material.Filled.Details" Text="Szczegóły" BadgeColor="Color.Success" ID="@("tab_details")">
+    <MudTabPanel Icon="@Icons.Material.Filled.DataUsage" Text="Raport" BadgeColor="Color.Success" ID="@("tab_report")">
+        <ReportPage />
+    </MudTabPanel>
+    <MudTabPanel Icon="@Icons.Material.Filled.Details" Text="Szczegóły" BadgeColor="Color.Success" ID="@("tab_details")" OnClick="@(() => _timer.Dispose())">
         <CascadingValue Value="CurrentSelectedSensor">
             <CascadingValue Value="_sensors">
                 <SensorPage />

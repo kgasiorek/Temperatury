@@ -1,0 +1,11 @@
+﻿@inject IJSRuntime JsRuntime
+
+<MudGrid Class="mt-2" Justify="Justify.Center">
+    <MudItem xs="3">
+        <MudDatePicker></MudDatePicker>
+        <MudButton OnClick="@PrintPage">Drukuj</MudButton>
+    </MudItem>
+    <MudItem xs="8">
+        <A4PageReportForPrint />
+    </MudItem>
+</MudGrid>

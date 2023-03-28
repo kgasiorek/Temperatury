@@ -1,46 +1,75 @@
 ﻿@using ApexCharts
 
-<MudGrid Justify="Justify.Center">
-    <MudItem xs="8">
-        <MudSelect Variant="Variant.Outlined" T="SensorsWithLastSixteenDataListView" ValueChanged="OnValueChanged">
-            @foreach (var sensor in Sensors)    
-            {
-                <MudSelectItem Value="@sensor">@sensor.Description (@sensor.OriginalName)</MudSelectItem>
-            }
-        </MudSelect>
-    </MudItem>
-    <MudItem xs="6">
-        <MudStack Spacing="0">
-            <MudDateRangePicker Label="Wybierz zakres raportu" Editable="true" @bind-DateRange="_dateRange" Variant="Variant.Outlined" />
-            <MudItem xs="12">
-                <MudStack Row="true">
-                    <MudTimePicker Label="Godzina rozpoczęcia" Editable="true" @bind-Time="timeStart" Variant="Variant.Outlined" />
-                    <MudTimePicker Label="Godzina zakończenia" Editable="true" @bind-Time="timeEnd" Variant="Variant.Outlined" />
-                </MudStack>
-            </MudItem>
+
+<MudGrid Class="mt-2" Justify="Justify.Center">
+    <MudItem xs="3">
+        <MudStack Spacing="1">
+            <MudText Typo="Typo.h6" Align="MudBlazor.Align.Center">
+                Pomieszczenie
+            </MudText>
+            <MudSelect Variant="Variant.Outlined" T="SensorsWithLastSixteenDataListView" ValueChanged="OnValueChanged" Value="SelectedSensor" Dense="true">
+                @foreach (var sensor in Sensors)
+                {
+                    <MudSelectItem Value="@sensor">@sensor.Description (@sensor.OriginalName)</MudSelectItem>
+                }
+            </MudSelect>
+            <MudText Typo="Typo.h6" Align="MudBlazor.Align.Center">
+                Ustawienia
+            </MudText>
+            <MudNumericField @bind-Value="SelectedSensor.MinTemp" Label="Min temp" Variant="Variant.Outlined" T="double" Disabled="true" AdornmentIcon="@Icons.Material.Filled.KeyboardArrowDown" IconSize="Size.Large" Adornment="Adornment.Start" />
+            <MudNumericField @bind-Value="SelectedSensor.MaxTemp" Label="Max temp" Variant="Variant.Outlined" T="double" Disabled="true" AdornmentIcon="@Icons.Material.Filled.KeyboardArrowUp" IconSize="Size.Large" Adornment="Adornment.Start" />
+            <MudButton FullWidth="true" Variant="Variant.Filled" Color="MudBlazor.Color.Primary">
+                Zmień
+            </MudButton>
         </MudStack>
     </MudItem>
-    <MudItem xs="2">
-        <MudNumericField @bind-Value="TimeOffsetToLoadData" Label="Ilość minut" Variant="Variant.Outlined" T="int" />
-        <MudButton FullWidth="true" Variant="Variant.Filled" OnClick="GetData">Pobierz dane</MudButton>
-    </MudItem>
-    @if(_loaded)
-    {
-        <MudItem xs="8">
-            <ApexChart TItem="TemperaturyDto"
-                       XAxisType="XAxisType.Datetime"
-                       Options="options"
-                       @ref="_chart"
-                      Debug>
-            <ApexPointSeries TItem="TemperaturyDto"
-                             Items="temperaturesBySensor"
-                             Name="Temperatura"
-                             SeriesType="SeriesType.Line"
-                             XValue="@(e => e.Czas.ToLocalTime())"
-                             YValue="@(e => (decimal?)(double)e.GetType().GetProperty($"{selectedSensor.OriginalName}").GetValue(e))"
-                             OrderBy="e=>e.X" />
-        </ApexChart>
-    </MudItem>
-    }
+    <MudItem xs="8">
+        <MudGrid Justify="Justify.Center">
+            <MudItem xs="12">
+                <MudGrid Spacing="2">
+                    <MudItem xs="8">
+                        <MudStack Spacing="0">
+                            <MudDateRangePicker Label="Wybierz zakres raportu" Editable="true" @bind-DateRange="_dateRange" Variant="Variant.Outlined" MaxDate="DateTime.Today" />
+                            <MudItem xs="12">
+                                <MudStack Row="true">
+                                    <MudTimePicker Label="Godzina rozpoczęcia" Editable="true" @bind-Time="timeStart" Variant="Variant.Outlined" />
+                                    <MudTimePicker Label="Godzina zakończenia" Editable="true" @bind-Time="timeEnd" Variant="Variant.Outlined" />
+                                </MudStack>
+                            </MudItem>
+                        </MudStack>
+                    </MudItem>
+                    <MudItem xs="4">
+                        <MudNumericField @bind-Value="TimeOffsetToLoadData" Label="Ilość minut" Variant="Variant.Outlined" T="int" />
+                        <MudButton FullWidth="true" Variant="Variant.Filled" Color="MudBlazor.Color.Primary" OnClick="GetData" Class="mt-1">Pobierz dane</MudButton>
+                    </MudItem>
+                </MudGrid>
+            </MudItem>
+            <MudItem xs="12">
+                <MudText Typo="Typo.h6" Align="MudBlazor.Align.Center">
+                    @SelectedSensor.Description (@SelectedSensor.OriginalName)
+                </MudText>
+                @if (_loaded)
+                {
 
+                    <ApexChart TItem="TemperaturyDto"
+                               XAxisType="XAxisType.Datetime"
+                               Options="options"
+                               Height="400"
+                    @ref="_chart"
+                              Debug>
+                    <ApexPointSeries TItem="TemperaturyDto"
+                                     Items="temperaturesBySensor"
+                                     Name="Temperatura"
+                                     SeriesType="SeriesType.Line"
+                                     XValue="@(e => e.Czas.ToLocalTime())"
+                                     YValue="@(e => (decimal?)(double)e.GetType().GetProperty($"{SelectedSensor.OriginalName}").GetValue(e))"
+                                     OrderBy="e=>e.X" />
+                </ApexChart>
+
+                }
+            </MudItem>
+        </MudGrid>
+    </MudItem>
 </MudGrid>
+
+
