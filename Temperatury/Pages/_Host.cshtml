@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link href="css/site.css" rel="stylesheet" />
     <link href="Temperatury.styles.css" rel="stylesheet" />
-    <link rel="icon" type="image/png" href="favicon.png"/>
+    <link rel="icon" type="image/png" href="favicon.png" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
@@ -35,27 +35,7 @@
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
     <script src="_content/Blazor-ApexCharts/js/apex-charts.min.js"></script>
     <script src="_content/Blazor-ApexCharts/js/blazor-apex-charts.js"></script>
-    <script>
-        function printDiv() {
-            var printContents = document.getElementById("report").innerHTML;
-            var iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            document.body.appendChild(iframe);
-            iframe.contentDocument.write('<html><head><title>Print</title>');
-            iframe.contentDocument.write('<link rel="stylesheet" href="_content/MudBlazor/MudBlazor.min.css" type="text/css" />');
-            iframe.contentDocument.write('<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" type="text/css" />');
-            iframe.contentDocument.write('<link rel="stylesheet" href="Temperatury.styles.css" type="text/css" />');
-            iframe.contentDocument.write('<link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" type="text/css" />');
-            iframe.contentDocument.write('<link rel="stylesheet" href="css/site.css" type="text/css" />');
-            iframe.contentDocument.write('</head><body>');
-            iframe.contentDocument.write(printContents);
-            iframe.contentDocument.write('</body></html>');
-            iframe.contentDocument.close();
-            iframe.onload = function () {
-                iframe.contentWindow.print();
-                document.body.removeChild(iframe);
-            }
-        }
-    </script>
+    <script src="~/css/js/svg.js"></script>
+    <script src="~/css/js/PrintDiv.js"></script>
 </body>
 </html>

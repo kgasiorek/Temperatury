@@ -51,7 +51,11 @@
             </MudItem>
         </MudGrid>
     </MudTabPanel>
-    <MudTabPanel Icon="@Icons.Material.Filled.Map" Text="Mapa" BadgeColor="Color.Success" ID="@("tab_map")" />
+    <MudTabPanel Icon="@Icons.Material.Filled.Map" Text="Mapa" BadgeColor="Color.Success" ID="@("tab_map")">
+        <CascadingValue Value="_sensors">
+            <MapWithSensors />
+        </CascadingValue>
+    </MudTabPanel>
     <MudTabPanel Icon="@Icons.Material.Filled.DataUsage" Text="Raport" BadgeColor="Color.Success" ID="@("tab_report")" OnClick="@(() => _timer.Dispose())">
         <ReportPage />
     </MudTabPanel>

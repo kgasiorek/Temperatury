@@ -49,7 +49,7 @@ namespace Infrastructure.Repositories.TemperaturyRepositories
         {
             var temperatures = await _db.Temperatury
                 .OrderByDescending(t => t.Czas)
-                .Where(x => x.Czas >= date && x.Czas <= date.AddHours(23.99))
+                .Where(x => x.Czas >= date && x.Czas <= date.AddHours(24))
                 .ToListAsync();
             return temperatures;
         }
