@@ -24,21 +24,28 @@
     }
 </style>
 
+<MudOverlay Visible="_reloading" LightBackground="true" ZIndex="9999">
+    <div class="d-flex flex-column flex-column justify-center" style="height:100%">
+        <MudProgressCircular Color="Color.Primary" Style="height:70px;width:70px;" Indeterminate="true" />
+        <MudText Align="Align.Center" Typo="Typo.h5"></MudText>
+    </div>
+</MudOverlay>
+
 <MudGrid Class="mt-2" Justify="Justify.Center">
     @if (_loaded)
     {
-        <MudItem xs="3">
-            <MudDatePicker DateChanged="DateChanged" MaxDate="@DateTime.Today"></MudDatePicker>
-            <MudButton OnClick="@PrintPage">Drukuj</MudButton>
-            <MudList Clickable="true" Dense="true" DisableGutters="true" Style="height:80vh;overflow:auto;">
+        <MudItem xs="2">
+            <MudButton OnClick="@PrintPage" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">Drukuj</MudButton>
+            <MudDatePicker PickerClosed="DateChanged" MaxDate="@DateTime.Today" @bind-Date="selectedDate" Variant="Variant.Outlined" Color="Color.Error"></MudDatePicker>
+            <MudList Clickable="true" Dense="true" DisableGutters="true" Class="pa-2" Style="box-shadow: 0px 0px 0px 1px rgba(0,0,0,0.3);border-radius: 1px; height:75vh;overflow:auto;" Color="Color.Secondary" DisablePadding="true">
                 @foreach (var sensor in Sensors.FirstOrDefault().Measurments)
                 {
-                    <MudListItem @onclick="() => ChangeSelectedTime(sensor.Time)">@sensor.Time.ToShortTimeString()</MudListItem>
+                    <MudListItem Dense="true"  @onclick="() => ChangeSelectedTime(sensor.Time)">@sensor.Time.ToShortTimeString()</MudListItem>
+                    <MudDivider DividerType="DividerType.Inset" />
                 }
             </MudList>
-
         </MudItem>
-        <MudItem xs="8" Style="display: flex; justify-content: center; width: 100%;">
+        <MudItem xs="7" Style="display: flex; justify-content: center; align-content:start; width: 100%">
             <MudPaper Elevation="5" Class="pa-2" Style="width: 21cm;height: 29.7cm;">
                 <div id="report">
                     <MudStack Row="true" Justify="Justify.SpaceBetween">

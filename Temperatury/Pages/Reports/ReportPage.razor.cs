@@ -6,15 +6,15 @@ namespace Temperatury.Pages.Reports;
 
 public partial class ReportPage
 {
-    DateTime selectedDate = DateTime.Today;
+    DateTime? selectedDate = DateTime.Today;
     DateTime? selectedTime;
     List<SensorsWithMeasurmentDataListView> Sensors = new();
-    bool firstLoad = true;
     bool _loaded = false;
+    bool _reloading = false;
 
     protected override async Task OnInitializedAsync()
     {
-        Sensors = await _sensorsService.GetSensorsDataForReport(selectedDate);
+        Sensors = await _sensorsService.GetSensorsDataForReport((DateTime)selectedDate);
         _loaded = true;
     }
     private async Task PrintPage()
@@ -22,13 +22,12 @@ public partial class ReportPage
         await JsRuntime.InvokeVoidAsync("printDiv");
     }
 
-    private async void DateChanged(DateTime? newDate)
+    private async void DateChanged()
     {
-        _loaded = false;
-        selectedDate = (DateTime)newDate;
-        Sensors = await _sensorsService.GetSensorsDataForReport(selectedDate);
-        _loaded = true;
+        _reloading = true;
+        Sensors = await _sensorsService.GetSensorsDataForReport((DateTime)selectedDate);
         selectedTime = null;
+        _reloading = false;
         StateHasChanged();
     }
 
